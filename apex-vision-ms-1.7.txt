@@ -1,0 +1,2 @@
+ubuntu|pytorch|apex|none|v0.3.2
+ubuntu|pytorch|torchvision|release/0.8.0|291f7e20339510cfa956b5782741697eb8e6d554
