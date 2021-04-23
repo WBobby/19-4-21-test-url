@@ -1,14 +1,19 @@
 #!/opt/conda/bin/python
 
-import torch
-
+try:
+    import torch
+except ImportError as error:
+    print("torch is NOT found...")
 print("pytorch is installed...")
 
-import apex
-
+try:
+    import apex
+except ImportError as error:
+    print("apex is NOT found...")
 print("apex is installed...")
 
-import torchvision
-
+try:
+    import torchvision
+except ImportError as error:
+    print("torchvision is NOT found...")
 print("torchvision is installed...")
-
