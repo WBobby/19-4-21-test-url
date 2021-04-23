@@ -3,7 +3,8 @@ CURRENT_FOLDER=/var/lib/jenkins
 CURT_DOCKER_OS=$(. /etc/os-release && echo "$ID")
 CURT_DOCKER_OS_VER=$(. /etc/os-release && echo "$VERSION_ID")
 #FW_NAME=$(echo $BUILD_ENVIRONMENT | cut -d "-" -f 1)
-TEMP=$(ls)
+TEMP=$(ls $CURRENT_FOLDER)
+echo "TEMP=$TEMP"
 if [[ "$TEMP" =~ ^caffe2 ]];
 then
     FW_NAME=caffe2
@@ -44,7 +45,7 @@ fi
 echo "=========================================================="
 echo "APEX/TORCHVISION CHECK"
 echo "=========================================================="
-python check.py
+python $CURRENT_FOLDER/test/check.py
 echo "=========================================================="
 
 echo "=========================================================="
@@ -57,5 +58,5 @@ echo "=========================================================="
 echo "NON-ROOT USER AND MPI CHECK"
 echo "=========================================================="
 useradd -m bobby || true
-sudo -H -u bobby env "PATH=$PATH" bash -c 'id; cd /var/lib/jenkins; pwd; cd test; ./check.py; /opt/ompi/bin/mpirun --allow-run-as-root --use-hwthread-cpus -n 16 hostname'
+sudo -H -u bobby env "PATH=$PATH" bash -c 'id; /var/lib/jenkins/test/check.py; /opt/ompi/bin/mpirun --allow-run-as-root --use-hwthread-cpus -n 16 hostname'
 echo "=========================================================="
