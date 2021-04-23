@@ -34,5 +34,5 @@ echo "=========================================================="
 echo "NON-ROOT USER AND MPI CHECK"
 echo "=========================================================="
 useradd -m bobby || true
-sudo -H -u bobby bash -c 'id; cd /var/lib/jenkins; pwd; cd test; ./check.py; /opt/ompi/bin/mpirun --allow-run-as-root --use-hwthread-cpus -n 16 hostname'
+sudo -H -u bobby env "PATH=$PATH" bash -c 'id; cd /var/lib/jenkins; pwd; cd test; ./check.py; /opt/ompi/bin/mpirun --allow-run-as-root --use-hwthread-cpus -n 16 hostname'
 echo "=========================================================="
