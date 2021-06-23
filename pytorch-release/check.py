@@ -3,6 +3,7 @@
 try:
     import torch
     print("pytorch is installed...")
+    print("version: ",torch.__version__)
 except ImportError as error:
     print("torch is NOT found...")
 

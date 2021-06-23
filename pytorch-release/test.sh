@@ -51,14 +51,20 @@ python $CURRENT_FOLDER/test/check.py
 echo "=========================================================="
 
 echo "=========================================================="
+echo "UCX CHECK"
+echo "=========================================================="
+ucx_info -v || true
+echo "=========================================================="
+
+echo "=========================================================="
 echo "MPI CHECK"
 echo "=========================================================="
-mpirun --allow-run-as-root --use-hwthread-cpus -n 16 hostname
+mpirun --allow-run-as-root --use-hwthread-cpus -n 8 hostname
 echo "=========================================================="
 
 echo "=========================================================="
 echo "NON-ROOT USER AND MPI CHECK"
 echo "=========================================================="
 useradd -m bobby || true
-sudo -H -u bobby env "PATH=$PATH" bash -c 'id; /var/lib/jenkins/test/check.py; /opt/ompi/bin/mpirun --allow-run-as-root --use-hwthread-cpus -n 16 hostname'
+sudo -H -u bobby env "PATH=$PATH" bash -c 'id; /var/lib/jenkins/test/check.py; /opt/ompi/bin/mpirun --allow-run-as-root --use-hwthread-cpus -n 8 hostname'
 echo "=========================================================="
