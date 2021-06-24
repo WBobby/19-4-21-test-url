@@ -16,5 +16,6 @@ except ImportError as error:
 try:
     import torchvision
     print("torchvision is installed...")
+    print("version: ",torchvision.__version__)
 except ImportError as error:
     print("torchvision is NOT found...")

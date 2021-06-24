@@ -6,6 +6,8 @@ CURT_DOCKER_OS=$(. /etc/os-release && echo "$ID")
 CURT_DOCKER_OS_VER=$(. /etc/os-release && echo "$VERSION_ID")
 #FW_NAME=$(echo $BUILD_ENVIRONMENT | cut -d "-" -f 1)
 TEMP=$(ls $CURRENT_FOLDER)
+MPI_THREAD=4
+
 echo "TEMP=$TEMP"
 if [[ "$TEMP" =~ caffe2 ]];
 then
@@ -48,6 +50,16 @@ echo "=========================================================="
 echo "APEX/TORCHVISION CHECK"
 echo "=========================================================="
 python $CURRENT_FOLDER/test/check.py
+echo ""
+pip show apex || true
+echo ""
+pip show torchvision || true
+echo "=========================================================="
+
+echo "=========================================================="
+echo "GPU ARCH CHECK"
+echo "=========================================================="
+roc-obj-ls -v /opt/conda/lib/python3.6/site-packages/torch/lib/libtorch_hip.so | grep gfx || true
 echo "=========================================================="
 
 echo "=========================================================="
@@ -59,12 +71,12 @@ echo "=========================================================="
 echo "=========================================================="
 echo "MPI CHECK"
 echo "=========================================================="
-mpirun --allow-run-as-root --use-hwthread-cpus -n 8 hostname
+mpirun --allow-run-as-root --use-hwthread-cpus -n ${MPI_THREAD} hostname
 echo "=========================================================="
 
 echo "=========================================================="
 echo "NON-ROOT USER AND MPI CHECK"
 echo "=========================================================="
 useradd -m bobby || true
-sudo -H -u bobby env "PATH=$PATH" bash -c 'id; /var/lib/jenkins/test/check.py; /opt/ompi/bin/mpirun --allow-run-as-root --use-hwthread-cpus -n 8 hostname'
+sudo -H -u bobby env "PATH=$PATH" "MPI_THREAD=${MPI_THREAD}" bash -c 'id; /var/lib/jenkins/test/check.py; /opt/ompi/bin/mpirun --allow-run-as-root --use-hwthread-cpus -n ${MPI_THREAD} hostname'
 echo "=========================================================="
