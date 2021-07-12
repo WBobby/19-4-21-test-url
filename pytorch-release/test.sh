@@ -30,6 +30,8 @@ then
     echo "Current FW Name: $FW_NAME"
     echo "Current FW Branch: $FW_BRANCH"
     echo "=========================================================="
+    cat /etc/apt/sources.list.d/rocm.list
+    echo "=========================================================="
 fi
 
 if [ "$CURT_DOCKER_OS" = "centos" ];
@@ -43,6 +45,8 @@ then
     echo "Current ROCm Version: $rocm_pkg_version"
     echo "Current FW Name: $FW_NAME"
     echo "Current FW Branch: $FW_BRANCH"
+    echo "=========================================================="
+    cat /etc/yum.repos.d/rocm.repo
     echo "=========================================================="
 fi
 
@@ -61,7 +65,11 @@ echo "GPU ARCH CHECK"
 echo "=========================================================="
 roc-obj-ls -v /opt/conda/lib/python3.6/site-packages/torch/lib/libtorch_hip.so | grep gfx || true
 echo "=========================================================="
-
+echo "=========================================================="
+echo "GPU check magma"
+echo "=========================================================="
+roc-obj-ls -v /opt/rocm-4.3.0/magma/lib/libmagma.so | grep gfx || true
+echo "=========================================================="
 echo "=========================================================="
 echo "UCX CHECK"
 echo "=========================================================="
@@ -70,6 +78,8 @@ echo "=========================================================="
 
 echo "=========================================================="
 echo "MPI CHECK"
+echo "=========================================================="
+mpirun --version
 echo "=========================================================="
 mpirun --allow-run-as-root --use-hwthread-cpus -n ${MPI_THREAD} hostname
 echo "=========================================================="
