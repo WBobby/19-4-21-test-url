@@ -63,12 +63,12 @@ echo "=========================================================="
 echo "=========================================================="
 echo "GPU ARCH CHECK"
 echo "=========================================================="
-roc-obj-ls -v /opt/conda/lib/python3.6/site-packages/torch/lib/libtorch_hip.so | grep gfx || true
+/root/bin/roc-obj-ls -v /opt/conda/lib/python3.6/site-packages/torch/lib/libtorch_hip.so | grep gfx || true
 echo "=========================================================="
 echo "=========================================================="
 echo "GPU check magma"
 echo "=========================================================="
-roc-obj-ls -v /opt/rocm/magma/lib/libmagma.so | grep gfx || true
+/root/bin/roc-obj-ls -v /opt/rocm/magma/lib/libmagma.so | grep gfx || true
 echo "=========================================================="
 echo "=========================================================="
 echo "UCX CHECK"
