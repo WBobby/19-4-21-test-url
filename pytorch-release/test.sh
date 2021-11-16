@@ -101,3 +101,9 @@ echo "=========================================================="
 useradd -m bobby || true
 sudo -H -u bobby env "PATH=$PATH" "MPI_THREAD=${MPI_THREAD}" bash -c 'id; /var/lib/jenkins/test/check.py; /opt/ompi/bin/mpirun --allow-run-as-root --use-hwthread-cpus -n ${MPI_THREAD} hostname'
 echo "=========================================================="
+
+echo "=========================================================="
+echo "Check 3rd party source code git works fine or not"
+echo "=========================================================="
+cd $CURRENT_FOLDER/pytorch/third_party; for d in */; do echo "$d"; cd $d; git status >/dev/null; if [[ "$?" != 0 ]]; then echo "================Missing $d================" && exit 2; fi; cd ..; done
+echo "=========================================================="
