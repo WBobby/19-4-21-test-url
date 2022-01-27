@@ -109,3 +109,9 @@ echo "Check 3rd party source code git works fine or not"
 echo "=========================================================="
 cd $CURRENT_FOLDER/pytorch/third_party; for d in */; do echo "$d"; cd $d; git status >/dev/null; if [[ "$?" != 0 ]]; then echo "================Missing $d================" && exit 2; fi; cd ..; done
 echo "=========================================================="
+
+echo "=========================================================="
+echo "Check /opt/rocm/bin/target.lst file"
+echo "=========================================================="
+cat /opt/rocm/bin/target.lst
+echo "=========================================================="
