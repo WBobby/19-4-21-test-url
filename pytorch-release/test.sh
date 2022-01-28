@@ -110,8 +110,30 @@ echo "=========================================================="
 cd $CURRENT_FOLDER/pytorch/third_party; for d in */; do echo "$d"; cd $d; git status >/dev/null; if [[ "$?" != 0 ]]; then echo "================Missing $d================" && exit 2; fi; cd ..; done
 echo "=========================================================="
 
+# Check gfx target.lst file
 echo "=========================================================="
 echo "Check /opt/rocm/bin/target.lst file"
 echo "=========================================================="
 cat /opt/rocm/bin/target.lst
 echo "=========================================================="
+
+echo "=========================================================="
+echo "Check local ROCm repo:"
+echo "=========================================================="
+if [ -d "/rocm-repo" ]; then
+    echo "local repo exist!"
+    if [ "$CURT_DOCKER_OS" == 'ubuntu' ]; then
+	cat /etc/apt/sources.list.d/rocm.list
+    elif [ "$CURT_DOCKER_OS" == 'centos' ]; then
+	cat /etc/yum.repos.d/rocm.repo
+    else
+	echo "NOT support OS." && exit 2
+    fi
+    ls /rocm-repo | wc
+else
+    echo "Can NOT find local repo"
+fi
+echo "=========================================================="
+
+echo -e "\n\n\n\n\n"
+
