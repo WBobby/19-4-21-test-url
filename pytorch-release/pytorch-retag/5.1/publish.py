@@ -49,8 +49,7 @@ def _final_fix(_dict):
     _result = {}
     for k, v in _dict.items():
         if 'centos' in v:
-            print(k, v)
-            break
+#            print(k, v)
             _result[k] = re.sub(r'centos7.[0-9]+.[0-9]+', 
                                 r'centos7', v)
 #        elif '1.8' in item:
@@ -68,8 +67,19 @@ if __name__ == '__main__':
 
     SPLIT_STR_LIST = _split_str_list(LIST_NAME)
     FINAL_RESULT = _retag_to_public_docker(SPLIT_STR_LIST, PYTORCH_REAL_VER)
+    print("="*30 + 'after_retag')
     print(FINAL_RESULT, len(FINAL_RESULT))
     FINAL_RESULT = _final_fix(FINAL_RESULT)
-    for k, v in FINAL_RESULT:
+    print("="*30 + 'after_fix')
+    print(FINAL_RESULT, len(FINAL_RESULT))
+    print("="*30)
+    print("docker tag command:")
+    print("="*30)
+    for k, v in FINAL_RESULT.items():
         print(f"docker tag {k} {v}")
+    print("="*30)
+    print("docker push command:")
+    print("="*30)
+    for k, v in FINAL_RESULT.items():
+        print(f"docker push {v}")
 
