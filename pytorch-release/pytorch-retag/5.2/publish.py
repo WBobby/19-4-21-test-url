@@ -31,6 +31,8 @@ def _get_version(_string, _pytorch_vers):
         _ver = 'staging'
         return _ver
 
+# use pytorch as delim to split rocm5.2_ubuntu20.04_py3.7_pytorch_rocm5.2_internal_testing
+# rocm5.2_ubuntu20.04_py3.7_pytorch_release-1.9_atomicAddNoReturn_41
 def _retag_to_public_docker(_split_list, _pytorch_vers, prefix='rocm/pytorch', delim='pytorch'):
     _result = {}
     for item in _split_list:
@@ -41,7 +43,7 @@ def _retag_to_public_docker(_split_list, _pytorch_vers, prefix='rocm/pytorch', d
         _temp.append(prefix + ':' + front_tag + delim)
         _ver = _get_version(tail_tag, _pytorch_vers)
         _temp.append('_' + _ver)
-        _result[''.join(item)] = ''.join(_temp)
+        _result[':'.join(item)] = ''.join(_temp)
     return _result 
 
 # Check before running it
@@ -58,7 +60,6 @@ def _final_fix(_dict):
             _result[k] = v
     return _result
 
-
 #_lst = _read_file('list.conf')
 #print(_lst, len(_lst))
 if __name__ == '__main__':
@@ -66,7 +67,11 @@ if __name__ == '__main__':
     PYTORCH_REAL_VER = _read_file('pytorch.ver')
 
     SPLIT_STR_LIST = _split_str_list(LIST_NAME)
+#    print("debug split", SPLIT_STR_LIST)
+
     FINAL_RESULT = _retag_to_public_docker(SPLIT_STR_LIST, PYTORCH_REAL_VER)
+#    print("debug retag", FINAL_RESULT)
+
     print("="*30 + 'after_retag')
     print(FINAL_RESULT, len(FINAL_RESULT))
     FINAL_RESULT = _final_fix(FINAL_RESULT)
