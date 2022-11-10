@@ -1,0 +1,87 @@
++ JOB_NAME=compute-rocm-rel-5.4
++ JOB_NUM=23
++ ART_SERVER=compute-artifactory.amd.com
++ ART_URL=http://compute-artifactory.amd.com/artifactory/list/compute-pytorch-rocm/compute-rocm-rel-5.4/23/
++ TORCH_WHL_VER=1.10.1
++ VISION_WHL_VER=0.11.2
++ PY_VER=3.9
++ sudo docker run --rm -v /var/tmp/.bb/test:/root/whl --shm-size 8G --cap-add=SYS_PTRACE --privileged --security-opt seccomp=unconfined --network=host --device=/dev/kfd --device=/dev/dri --group-add video compute-artifactory.amd.com:5000/rocm-plus-docker/framework/release-public:ub20-py3.9-test bash -xc 'apt update && pip3 install --upgrade pip && 	pip3 install --verbose --use-deprecated=legacy-resolver torch==1.10.1 torchvision==0.11.2 -f http://compute-artifactory.amd.com/artifactory/list/compute-pytorch-rocm/compute-rocm-rel-5.4/23/ --trusted-host compute-artifactory.amd.com && 	cd /root/whl || true; 	if [ ! -d pytorch-micro-benchmarking ]; then git clone https://github.com/ROCmSoftwarePlatform/pytorch-micro-benchmarking.git; fi 	&& cd pytorch-micro-benchmarking && python3 micro_benchmarking_pytorch.py --network resnet50'
++ apt update
+
+WARNING: apt does not have a stable CLI interface. Use with caution in scripts.
+
+Get:1 http://security.ubuntu.com/ubuntu focal-security InRelease [114 kB]
+Hit:2 http://archive.ubuntu.com/ubuntu focal InRelease
+Get:3 http://ppa.launchpad.net/deadsnakes/ppa/ubuntu focal InRelease [18.1 kB]
+Get:4 http://archive.ubuntu.com/ubuntu focal-updates InRelease [114 kB]
+Get:5 http://security.ubuntu.com/ubuntu focal-security/universe amd64 Packages [931 kB]
+Get:6 http://archive.ubuntu.com/ubuntu focal-backports InRelease [108 kB]
+Get:7 http://ppa.launchpad.net/deadsnakes/ppa/ubuntu focal/main amd64 Packages [29.4 kB]
+Get:8 http://archive.ubuntu.com/ubuntu focal-updates/restricted amd64 Packages [1778 kB]
+Get:9 http://security.ubuntu.com/ubuntu focal-security/main amd64 Packages [2269 kB]
+Get:10 http://security.ubuntu.com/ubuntu focal-security/restricted amd64 Packages [1661 kB]
+Get:11 http://archive.ubuntu.com/ubuntu focal-updates/multiverse amd64 Packages [30.2 kB]
+Get:12 http://archive.ubuntu.com/ubuntu focal-updates/universe amd64 Packages [1229 kB]
+Get:13 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 Packages [2738 kB]
+Get:14 http://archive.ubuntu.com/ubuntu focal-backports/universe amd64 Packages [27.5 kB]
+Get:15 http://archive.ubuntu.com/ubuntu focal-backports/main amd64 Packages [55.2 kB]
+Fetched 11.1 MB in 5s (2030 kB/s)
+Reading package lists...
+Building dependency tree...
+Reading state information...
+60 packages can be upgraded. Run 'apt list --upgradable' to see them.
++ pip3 install --upgrade pip
+Requirement already satisfied: pip in /usr/local/lib/python3.9/dist-packages (22.2.2)
+Collecting pip
+  Downloading pip-22.3.1-py3-none-any.whl (2.1 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.1/2.1 MB 12.3 MB/s eta 0:00:00
+Installing collected packages: pip
+  Attempting uninstall: pip
+    Found existing installation: pip 22.2.2
+    Uninstalling pip-22.2.2:
+      Successfully uninstalled pip-22.2.2
+Successfully installed pip-22.3.1
+WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv
++ pip3 install --verbose --use-deprecated=legacy-resolver torch==1.10.1 torchvision==0.11.2 -f http://compute-artifactory.amd.com/artifactory/list/compute-pytorch-rocm/compute-rocm-rel-5.4/23/ --trusted-host compute-artifactory.amd.com
+Using pip 22.3.1 from /usr/local/lib/python3.9/dist-packages/pip (python 3.9)
+Looking in links: http://compute-artifactory.amd.com/artifactory/list/compute-pytorch-rocm/compute-rocm-rel-5.4/23/
+Collecting torch==1.10.1
+  Downloading http://compute-artifactory.amd.com/artifactory/list/compute-pytorch-rocm/compute-rocm-rel-5.4/23/torch-1.10.1%2Brocm5.4-cp39-cp39-linux_x86_64.whl (1519.8 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.5/1.5 GB 557.8 kB/s eta 0:00:00
+Collecting torchvision==0.11.2
+  Downloading http://compute-artifactory.amd.com/artifactory/list/compute-pytorch-rocm/compute-rocm-rel-5.4/23/torchvision-0.11.2%2Brocm5.4-cp39-cp39-linux_x86_64.whl (80.1 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 80.1/80.1 MB 15.3 MB/s eta 0:00:00
+Collecting typing-extensions
+  Downloading typing_extensions-4.4.0-py3-none-any.whl (26 kB)
+Collecting numpy
+  Downloading numpy-1.23.4-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (17.1 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 17.1/17.1 MB 10.3 MB/s eta 0:00:00
+Collecting pillow!=8.3.0,>=5.3.0
+  Downloading Pillow-9.3.0-cp39-cp39-manylinux_2_28_x86_64.whl (3.3 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 3.3/3.3 MB 13.1 MB/s eta 0:00:00
+Installing collected packages: typing-extensions, torch, numpy, pillow, torchvision
+  changing mode of /usr/local/bin/convert-caffe2-to-onnx to 755
+  changing mode of /usr/local/bin/convert-onnx-to-caffe2 to 755
+  changing mode of /usr/local/bin/torchrun to 755
+  changing mode of /usr/local/bin/f2py to 755
+  changing mode of /usr/local/bin/f2py3 to 755
+  changing mode of /usr/local/bin/f2py3.9 to 755
+Successfully installed numpy-1.23.4 pillow-9.3.0 torch-1.10.1+rocm5.4 torchvision-0.11.2+rocm5.4 typing-extensions-4.4.0
+WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv
++ cd /root/whl
++ '[' '!' -d pytorch-micro-benchmarking ']'
++ cd pytorch-micro-benchmarking
++ python3 micro_benchmarking_pytorch.py --network resnet50
+MIOpen(HIP): Warning [SQLiteBase] Missing system database file: gfx906_60.kdb Performance may degrade. Please follow instructions to install: https://github.com/ROCmSoftwarePlatform/MIOpen#installing-miopen-kernels-package
+INFO: running forward and backward for warmup.
+INFO: running the benchmark..
+OK: finished running benchmark..
+--------------------SUMMARY--------------------------
+Microbenchmark for network : resnet50
+Num devices: 1
+Dtype: FP32
+Mini batch size [img] : 64
+Time per mini-batch : 0.23349378108978272
+Throughput [img/sec] : 274.0972359147793
++ echo rtn=0
+rtn=0

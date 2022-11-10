@@ -1,0 +1,99 @@
++ JOB_NAME=compute-rocm-rel-5.3
++ JOB_NUM=96
++ ART_SERVER=compute-artifactory.amd.com
++ ART_URL=http://compute-artifactory.amd.com/artifactory/list/compute-pytorch-rocm/compute-rocm-rel-5.3/96/
++ TORCH_WHL_VER=1.10.1
++ VISION_WHL_VER=0.11.2
++ PY_VER=3.9
++ sudo docker run --rm -v /home/jenkins/.bb/test:/root/whl --shm-size 8G --cap-add=SYS_PTRACE --privileged --security-opt seccomp=unconfined --network=host --device=/dev/kfd --device=/dev/dri --group-add video compute-artifactory.amd.com:5000/rocm-plus-docker/framework/release-public:ub20-py3.9-test bash -xc 'pip3 install --verbose --use-deprecated=legacy-resolver torch==1.10.1 torchvision==0.11.2 -f http://compute-artifactory.amd.com/artifactory/list/compute-pytorch-rocm/compute-rocm-rel-5.3/96/ --trusted-host compute-artifactory.amd.com && 	cd /root/whl/pytorch-micro-benchmarking && python3 micro_benchmarking_pytorch.py --network resnet50'
++ pip3 install --verbose --use-deprecated=legacy-resolver torch==1.10.1 torchvision==0.11.2 -f http://compute-artifactory.amd.com/artifactory/list/compute-pytorch-rocm/compute-rocm-rel-5.3/96/ --trusted-host compute-artifactory.amd.com
+Using pip 22.2.2 from /usr/local/lib/python3.9/dist-packages/pip (python 3.9)
+Looking in links: http://compute-artifactory.amd.com/artifactory/list/compute-pytorch-rocm/compute-rocm-rel-5.3/96/
+Collecting torch==1.10.1
+  Downloading http://compute-artifactory.amd.com/artifactory/list/compute-pytorch-rocm/compute-rocm-rel-5.3/96/torch-1.10.1%2Brocm5.3.2-cp39-cp39-linux_x86_64.whl (1532.7 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.5/1.5 GB 614.9 kB/s eta 0:00:00
+Collecting torchvision==0.11.2
+  Downloading http://compute-artifactory.amd.com/artifactory/list/compute-pytorch-rocm/compute-rocm-rel-5.3/96/torchvision-0.11.2%2Brocm5.3.2-cp39-cp39-linux_x86_64.whl (79.7 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 79.7/79.7 MB 5.5 MB/s eta 0:00:00
+Collecting typing-extensions
+  Downloading typing_extensions-4.4.0-py3-none-any.whl (26 kB)
+Collecting numpy
+  Downloading numpy-1.23.4-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (17.1 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 17.1/17.1 MB 9.1 MB/s eta 0:00:00
+Collecting pillow!=8.3.0,>=5.3.0
+  Downloading Pillow-9.3.0-cp39-cp39-manylinux_2_28_x86_64.whl (3.3 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 3.3/3.3 MB 9.0 MB/s eta 0:00:00
+Installing collected packages: typing-extensions, torch, numpy, pillow, torchvision
+  changing mode of /usr/local/bin/convert-caffe2-to-onnx to 755
+  changing mode of /usr/local/bin/convert-onnx-to-caffe2 to 755
+  changing mode of /usr/local/bin/torchrun to 755
+  changing mode of /usr/local/bin/f2py to 755
+  changing mode of /usr/local/bin/f2py3 to 755
+  changing mode of /usr/local/bin/f2py3.9 to 755
+Successfully installed numpy-1.23.4 pillow-9.3.0 torch-1.10.1+rocm5.3.2 torchvision-0.11.2+rocm5.3.2 typing-extensions-4.4.0
+WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv
+--- Logging error ---
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/dist-packages/pip/_internal/utils/logging.py", line 177, in emit
+    self.console.print(renderable, overflow="ignore", crop=False, style=style)
+  File "/usr/local/lib/python3.9/dist-packages/pip/_vendor/rich/console.py", line 1673, in print
+    extend(render(renderable, render_options))
+  File "/usr/local/lib/python3.9/dist-packages/pip/_vendor/rich/console.py", line 1305, in render
+    for render_output in iter_render:
+  File "/usr/local/lib/python3.9/dist-packages/pip/_internal/utils/logging.py", line 134, in __rich_console__
+    for line in lines:
+  File "/usr/local/lib/python3.9/dist-packages/pip/_vendor/rich/segment.py", line 249, in split_lines
+    for segment in segments:
+  File "/usr/local/lib/python3.9/dist-packages/pip/_vendor/rich/console.py", line 1283, in render
+    renderable = rich_cast(renderable)
+  File "/usr/local/lib/python3.9/dist-packages/pip/_vendor/rich/protocol.py", line 36, in rich_cast
+    renderable = cast_method()
+  File "/usr/local/lib/python3.9/dist-packages/pip/_internal/self_outdated_check.py", line 130, in __rich__
+    pip_cmd = get_best_invocation_for_this_pip()
+  File "/usr/local/lib/python3.9/dist-packages/pip/_internal/utils/entrypoints.py", line 58, in get_best_invocation_for_this_pip
+    if found_executable and os.path.samefile(
+  File "/usr/lib/python3.9/genericpath.py", line 101, in samefile
+    s2 = os.stat(f2)
+FileNotFoundError: [Errno 2] No such file or directory: '/usr/bin/pip'
+Call stack:
+  File "/usr/local/bin/pip3", line 8, in <module>
+    sys.exit(main())
+  File "/usr/local/lib/python3.9/dist-packages/pip/_internal/cli/main.py", line 70, in main
+    return command.main(cmd_args)
+  File "/usr/local/lib/python3.9/dist-packages/pip/_internal/cli/base_command.py", line 101, in main
+    return self._main(args)
+  File "/usr/local/lib/python3.9/dist-packages/pip/_internal/cli/base_command.py", line 223, in _main
+    self.handle_pip_version_check(options)
+  File "/usr/local/lib/python3.9/dist-packages/pip/_internal/cli/req_command.py", line 190, in handle_pip_version_check
+    pip_self_version_check(session, options)
+  File "/usr/local/lib/python3.9/dist-packages/pip/_internal/self_outdated_check.py", line 236, in pip_self_version_check
+    logger.warning("[present-rich] %s", upgrade_prompt)
+  File "/usr/lib/python3.9/logging/__init__.py", line 1458, in warning
+    self._log(WARNING, msg, args, **kwargs)
+  File "/usr/lib/python3.9/logging/__init__.py", line 1589, in _log
+    self.handle(record)
+  File "/usr/lib/python3.9/logging/__init__.py", line 1599, in handle
+    self.callHandlers(record)
+  File "/usr/lib/python3.9/logging/__init__.py", line 1661, in callHandlers
+    hdlr.handle(record)
+  File "/usr/lib/python3.9/logging/__init__.py", line 952, in handle
+    self.emit(record)
+  File "/usr/local/lib/python3.9/dist-packages/pip/_internal/utils/logging.py", line 179, in emit
+    self.handleError(record)
+Message: '[present-rich] %s'
+Arguments: (UpgradePrompt(old='22.2.2', new='22.3'),)
++ cd /root/whl/pytorch-micro-benchmarking
++ python3 micro_benchmarking_pytorch.py --network resnet50
+MIOpen(HIP): Warning [SQLiteBase] Missing system database file: gfx906_60.kdb Performance may degrade. Please follow instructions to install: https://github.com/ROCmSoftwarePlatform/MIOpen#installing-miopen-kernels-package
+INFO: running forward and backward for warmup.
+INFO: running the benchmark..
+OK: finished running benchmark..
+--------------------SUMMARY--------------------------
+Microbenchmark for network : resnet50
+Num devices: 1
+Dtype: FP32
+Mini batch size [img] : 64
+Time per mini-batch : 0.23322982788085939
+Throughput [img/sec] : 274.4074399981681
++ echo rtn=0
+rtn=0
