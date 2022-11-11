@@ -1,0 +1,1 @@
+container_id=$(docker run -d compute-artifactory.amd.com:5000/rocm-plus-docker/framework/release-public:rocm5.3_ubuntu20.04_py3.7_pytorch_release-1.10_49 bash -c "sed -i 's/ubuntu/focal/' /etc/apt/sources.list.d/rocm.list")
