@@ -16,9 +16,11 @@ def _split_str_list(_list):
 def _get_version(_string, _pytorch_vers):
     _release = 'release-'
     _staging = 'internal_testing'
+    print(_string, _pytorch_vers)
+
     if _release in _string:
         _ver = _string.split(_release)[-1].split('_')[0]
-#        print("verion:", _ver, len(_ver))
+        print("verion:", _ver, len(_ver))
         if not re.match(r'[0-9]+.[0-9]+(.[0-9]+)?', _ver):
             raise ValueError(f"The version number is NOT correct...")
         _ver_pytorch = ""
