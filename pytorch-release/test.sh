@@ -7,9 +7,10 @@ CURT_DOCKER_OS_VER=$(. /etc/os-release && echo "$VERSION_ID")
 #FW_NAME=$(echo $BUILD_ENVIRONMENT | cut -d "-" -f 1)
 TEMP=$(ls $CURRENT_FOLDER)
 MPI_THREAD=4
-DOCKER_PYTHON_VER=$(conda list | grep -E "^python[[:blank:]]")
-DOCKER_PYTHON_VER=$(echo ${DOCKER_PYTHON_VER} |awk 'NR==1{print $2}')
-DOCKER_PYTHON_VER=${DOCKER_PYTHON_VER%.*}
+#DOCKER_PYTHON_VER=$(conda list | grep -E "^python[[:blank:]]")
+#DOCKER_PYTHON_VER=$(echo ${DOCKER_PYTHON_VER} |awk 'NR==1{print $2}')
+#DOCKER_PYTHON_VER=${DOCKER_PYTHON_VER%.*}
+DOCKER_PYTHON_VER=$(python -V | grep -Eo "[0-9].[0-9].[0-9]")
 
 echo "TEMP=$TEMP"
 if [[ "$TEMP" =~ caffe2 ]];
@@ -70,7 +71,8 @@ echo "=========================================================="
 echo "=========================================================="
 echo "GPU ARCH CHECK"
 echo "=========================================================="
-/root/bin/roc-obj-ls -v /opt/conda/lib/python${DOCKER_PYTHON_VER}/site-packages/torch/lib/libtorch_hip.so | grep gfx || true
+#/root/bin/roc-obj-ls -v /opt/conda/lib/python${DOCKER_PYTHON_VER}/site-packages/torch/lib/libtorch_hip.so | grep gfx || true
+/root/bin/roc-obj-ls -v $(dirname $(dirname $(which python)))/lib/python${DOCKER_PYTHON_VER%.*}/site-packages/torch/lib/libtorch_hip.so | grep gfx || true
 echo "=========================================================="
 echo "=========================================================="
 echo "GPU check magma"

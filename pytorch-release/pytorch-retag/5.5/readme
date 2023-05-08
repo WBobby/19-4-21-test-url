@@ -1,0 +1,4 @@
+1. update list.conf and add all PyTorch docker images in the list
+2. run create_pytorch_version.sh to create pytorch.ver file with the correct PyTorch version.
+
+
