@@ -1,4 +1,10 @@
-#!/opt/conda/bin/python
+
+
+
+
+#!/opt/conda/envs/py_3.8/bin/python
+
+##!/opt/conda/bin/python
 
 try:
     import torch

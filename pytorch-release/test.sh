@@ -61,7 +61,9 @@ fi
 echo "=========================================================="
 echo "APEX/TORCHVISION CHECK"
 echo "=========================================================="
-python $CURRENT_FOLDER/test/check.py
+# DOCK_PYTHON=${type python}
+#${DOCK_PYTHON} $CURRENT_FOLDER/test/check.py
+python  $CURRENT_FOLDER/test/check.py
 echo ""
 pip show apex || true
 echo ""
@@ -103,7 +105,7 @@ echo "=========================================================="
 echo "NON-ROOT USER AND MPI CHECK"
 echo "=========================================================="
 useradd -m bobby || true
-sudo -H -u bobby env "PATH=$PATH" "MPI_THREAD=${MPI_THREAD}" bash -c 'id; /var/lib/jenkins/test/check.py; /opt/ompi/bin/mpirun --allow-run-as-root --use-hwthread-cpus -n ${MPI_THREAD} hostname'
+sudo -H -u bobby env "PATH=$PATH" "MPI_THREAD=${MPI_THREAD}" bash -c 'id; python /var/lib/jenkins/test/check.py; /opt/ompi/bin/mpirun --allow-run-as-root --use-hwthread-cpus -n ${MPI_THREAD} hostname'
 echo "=========================================================="
 
 echo "=========================================================="
