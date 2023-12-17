@@ -10,7 +10,7 @@ MPI_THREAD=4
 #DOCKER_PYTHON_VER=$(conda list | grep -E "^python[[:blank:]]")
 #DOCKER_PYTHON_VER=$(echo ${DOCKER_PYTHON_VER} |awk 'NR==1{print $2}')
 #DOCKER_PYTHON_VER=${DOCKER_PYTHON_VER%.*}
-DOCKER_PYTHON_VER=$(python -V | grep -Eo "[0-9].[0-9].[0-9]")
+DOCKER_PYTHON_VER=$(python -V | grep -Eo "[0-9]+.[0-9]+.[0-9]+")
 
 echo "TEMP=$TEMP"
 if [[ "$TEMP" =~ caffe2 ]];
