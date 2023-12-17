@@ -74,12 +74,19 @@ echo "=========================================================="
 echo "GPU ARCH CHECK"
 echo "=========================================================="
 #/root/bin/roc-obj-ls -v /opt/conda/lib/python${DOCKER_PYTHON_VER}/site-packages/torch/lib/libtorch_hip.so | grep gfx || true
-/root/bin/roc-obj-ls -v $(dirname $(dirname $(which python)))/lib/python${DOCKER_PYTHON_VER%.*}/site-packages/torch/lib/libtorch_hip.so | grep gfx || true
+#/root/bin/roc-obj-ls -v $(dirname $(dirname $(which python)))/lib/python${DOCKER_PYTHON_VER%.*}/site-packages/torch/lib/libtorch_hip.so | grep gfx || true
+#([ -f /opt/conda/lib/python3.9/site-packages/torch/lib/libtorch_hip.so ] && /root/bin/roc-obj-ls -v /opt/conda/lib/python3.9/site-packages/torch/lib/libtorch_hip.so | grep gfx) || \
+#    /root/bin/roc-obj-ls -v $(dirname $(dirname $(which python)))/lib/python${ANACONDA_PYTHON_VERSION}/site-packages/torch/lib/libtorch_hip.so | grep gfx || true
+toch_location=$(find / -name "libtorch_hip.so" | head -n1)
+roc_obj_location=$(find /opt -name "roc-obj-ls" | head -n1)
+"${roc_obj_location}" -v ${toch_location} | grep -oP '[a-z0-9-]*gfx[0-9a-z]+' | sort | uniq || true
 echo "=========================================================="
 echo "=========================================================="
 echo "GPU check magma"
 echo "=========================================================="
-/root/bin/roc-obj-ls -v /opt/rocm/magma/lib/libmagma.so | grep gfx || true
+#/root/bin/roc-obj-ls -v /opt/rocm/magma/lib/libmagma.so | grep gfx || true
+magma_location=$(find / -name "libmagma.so" | head -n1)
+"${roc_obj_location}" -v ${magma_location} | grep -oP '[a-z0-9-]*gfx[0-9a-z]+' | sort | uniq || true 
 echo "=========================================================="
 echo "=========================================================="
 echo "UCX CHECK"
