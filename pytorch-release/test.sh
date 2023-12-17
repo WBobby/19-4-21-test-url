@@ -59,7 +59,7 @@ then
 fi
 
 echo "=========================================================="
-echo "APEX/TORCHVISION CHECK"
+echo "APEX/TORCHVISION/TENSOR_RELATED CHECK"
 echo "=========================================================="
 # DOCK_PYTHON=${type python}
 #${DOCK_PYTHON} $CURRENT_FOLDER/test/check.py
@@ -68,6 +68,8 @@ echo ""
 pip show apex || true
 echo ""
 pip show torchvision || true
+echo ""
+pip list | grep tensor
 echo "=========================================================="
 
 echo "=========================================================="
@@ -102,8 +104,9 @@ echo "=========================================================="
 mpirun --allow-run-as-root --use-hwthread-cpus -n ${MPI_THREAD} hostname
 echo "=========================================================="
 
+ofed_version=$(apt list | grep ofed | grep -oP '\b\d+(\.\d+){5}\b')
 echo "=========================================================="
-echo "OFED CHECK"    fix at 5.3-1.0.5.0
+echo "OFED CHECK"    ${ofed_version}
 echo "=========================================================="
 dpkg -l | grep ibverbs-providers || true
 echo "=========================================================="
